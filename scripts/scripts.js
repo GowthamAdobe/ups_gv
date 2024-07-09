@@ -1,9 +1,8 @@
 import {
   sampleRUM,
-  buildBlock,
   loadHeader,
   loadFooter,
-  // decorateButtons,
+  decorateButtons,
   decorateIcons,
   decorateSections,
   decorateBlocks,
@@ -11,24 +10,42 @@ import {
   waitForLCP,
   loadBlocks,
   loadCSS,
-  toClassName,
 } from './aem.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 /**
- * Builds hero block and prepends to main in a new section.
- * @param {Element} main The container element
+ * Moves all the attributes from a given elmenet to another given element.
+ * @param {Element} from the element to copy attributes from
+ * @param {Element} to the element to copy attributes to
  */
-function buildHeroBlock(main) {
-  const h1 = main.querySelector('h1');
-  const picture = main.querySelector('picture');
-  // eslint-disable-next-line no-bitwise
-  if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
-    const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [picture, h1] }));
-    main.prepend(section);
+export function moveAttributes(from, to, attributes) {
+  if (!attributes) {
+    // eslint-disable-next-line no-param-reassign
+    attributes = [...from.attributes].map(({ nodeName }) => nodeName);
   }
+  attributes.forEach((attr) => {
+    const value = from.getAttribute(attr);
+    if (value) {
+      to.setAttribute(attr, value);
+      from.removeAttribute(attr);
+    }
+  });
+}
+
+/**
+ * Move instrumentation attributes from a given element to another given element.
+ * @param {Element} from the element to copy attributes from
+ * @param {Element} to the element to copy attributes to
+ */
+export function moveInstrumentation(from, to) {
+  moveAttributes(
+    from,
+    to,
+    [...from.attributes]
+      .map(({ nodeName }) => nodeName)
+      .filter((attr) => attr.startsWith('data-aue-') || attr.startsWith('data-richtext-')),
+  );
 }
 
 /**
@@ -47,43 +64,13 @@ async function loadFonts() {
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
-function buildAutoBlocks(main) {
+function buildAutoBlocks() {
   try {
-    buildHeroBlock(main);
+    // TODO: add auto block, if needed
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
   }
-}
-
-/**
- * Decorates links with appropriate classes to style them as buttons
- * @param {HTMLElement} main The main container element
- */
-function decorateButtons(main) {
-  main.querySelectorAll('p a[href]').forEach((a) => {
-    a.title = a.title || a.textContent;
-    const p = a.closest('p');
-    // identify standalone links
-    if (a.href !== a.textContent && p.textContent === a.textContent) {
-      a.className = 'button';
-      const strong = a.closest('strong');
-      const em = a.closest('em');
-      const double = !!strong && !!em;
-      if (double) a.classList.add('accent');
-      else if (strong) a.classList.add('emphasis');
-      else if (em) a.classList.add('outline');
-      p.innerHTML = a.outerHTML;
-      p.className = 'button-wrapper';
-    }
-  });
-}
-
-function decorateImages(main) {
-  main.querySelectorAll('p img').forEach((img) => {
-    const p = img.closest('p');
-    p.className = 'img-wrapper';
-  });
 }
 
 /**
@@ -94,7 +81,6 @@ function decorateImages(main) {
 export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateButtons(main);
-  decorateImages(main);
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
@@ -123,17 +109,6 @@ async function loadEager(doc) {
   } catch (e) {
     // do nothing
   }
-}
-
-/**
- * build a symbol element
- * @param {String} name the symbol name
- * @returns {Element} the symbol
- */
-export function buildSymbol(name) {
-  const icon = document.createElement('i');
-  icon.className = `symbol symbol-${toClassName(name)}`;
-  return icon;
 }
 
 /**
@@ -167,6 +142,7 @@ function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
   window.setTimeout(() => import('./delayed.js'), 3000);
   // load anything that can be postponed to the latest here
+  import('./sidekick.js').then(({ initSidekick }) => initSidekick());
 }
 
 async function loadPage() {

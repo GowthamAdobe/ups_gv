@@ -1,2 +1,5 @@
 mountpoints:
-  /: https://adobe.sharepoint.com/:f:/r/sites/HelixProjects/Shared%20Documents/sites/ups
+  /:
+    url: "https://author-p121603-e1341757.adobeaemcloud.com/bin/franklin.delivery/AEM-COMP/crosswalk/main"
+    type: "markup"
+    suffix: ".html"

@@ -1,6 +1,6 @@
 {
   "mappings": [
-    "/content/UPS/:/",
-    "/content/UPS/configuration:/.helix/config.json"
+    "/content/ups/:/",
+    "/content/ups/configuration:/.helix/config.json"
   ]
 }

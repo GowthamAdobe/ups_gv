@@ -72,21 +72,15 @@ footer .footer .nav-list .collapsible > button {
   cursor: pointer;
 }
 
-footer .footer .nav-list .collapsible > button::after {
+footer .footer .nav-list .collapsible > button i.symbol {
   position: absolute;
-  content: '';
   right: 2rem;
   top: 50%;
-  width: 11px;
-  height: 11px;
-  border-bottom: 2px solid currentcolor;
-  border-left: 2px solid currentcolor;
-  transform: translateY(-50%) rotate(315deg);
-  transition: transform 0.35s ease-in-out;
+  transform: translateY(-50%);
 }
 
-footer .footer .nav-list .collapsible > button[aria-expanded="true"]::after {
-  transform: translateY(-50%) rotate(135deg);
+footer .footer .nav-list .collapsible > button[aria-expanded="true"] i.symbol {
+  transform: translateY(-50%) rotate(180deg);
 }
 
 footer .footer .nav-list .collapsible > button + ul {
@@ -139,8 +133,8 @@ footer .footer .section:last-child {
     display: none;
   }
 
-  footer .footer .nav-list .collapsible > button::after {
-    content: none;
+  footer .footer .nav-list .collapsible > button i.symbol {
+    display: none;
   }
 
   footer .footer .nav-list .collapsible > button[aria-expanded="true"] + ul {

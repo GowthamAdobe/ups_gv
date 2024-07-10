@@ -11,6 +11,7 @@ import {
   waitForLCP,
   loadBlocks,
   loadCSS,
+  toClassName,
 } from './aem.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
@@ -122,6 +123,17 @@ async function loadEager(doc) {
   } catch (e) {
     // do nothing
   }
+}
+
+/**
+ * build a symbol element
+ * @param {String} name the symbol name
+ * @returns {Element} the symbol
+ */
+export function buildSymbol(name) {
+  const icon = document.createElement('i');
+  icon.className = `symbol symbol-${toClassName(name)}`;
+  return icon;
 }
 
 /**

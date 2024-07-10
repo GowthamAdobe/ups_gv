@@ -152,6 +152,7 @@ footer .footer .section:last-child {
 
   footer .footer .section.legal .nav-list .collapsible .collapsible-content {
       border-block-start: 1px solid var(--footer-border-color);
+      padding-inline: 0;
   }
 
   footer .footer .section.legal .nav-list .collapsible .collapsible-content .sublist {

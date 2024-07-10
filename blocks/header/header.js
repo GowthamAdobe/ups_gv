@@ -1,4 +1,5 @@
 import { getMetadata, loadCSS, loadScript } from '../../scripts/aem.js';
+import { buildSymbol } from '../../scripts/scripts.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 // media query match that indicates desktop width
@@ -45,12 +46,6 @@ function buildButton(id) {
   button.setAttribute('type', 'button');
   if (id) button.id = id;
   return button;
-}
-
-function buildSymbol(name) {
-  const icon = document.createElement('i');
-  icon.className = `symbol symbol-${name}`;
-  return icon;
 }
 
 function wrapAnchorText(a) {

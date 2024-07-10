@@ -1,4 +1,5 @@
 import { getMetadata, toClassName } from '../../scripts/aem.js';
+import { buildSymbol } from '../../scripts/scripts.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 const isDesktop = window.matchMedia('(width >= 900px)');
@@ -20,6 +21,7 @@ function decorateFooterNav(block, footerNavList) {
     const subList = liEl.querySelector(':scope > ul');
     if (subList) {
       liEl.classList.add('collapsible');
+
       const textNodes = [...liEl.childNodes].filter((node) => node.nodeType === Node.TEXT_NODE);
       const liText = textNodes.map((text) => text.textContent).join('').trim();
       const dropButton = document.createElement('button');
@@ -32,6 +34,8 @@ function decorateFooterNav(block, footerNavList) {
       ].forEach(({ attr, value }) => {
         dropButton.setAttribute(attr, value);
       });
+      dropButton.append(buildSymbol('chevron'));
+
       liEl.prepend(dropButton);
       textNodes.forEach((text) => text.remove());
       subList.setAttribute('id', sublistId);

@@ -83,26 +83,31 @@ footer .footer .nav-list .collapsible > button[aria-expanded="true"] i.symbol {
   transform: translateY(-50%) rotate(180deg);
 }
 
-footer .footer .nav-list .collapsible > button + ul {
-  display: none;
-  padding: 22px 20px;
+footer .footer .nav-list .collapsible .collapsible-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: all 0.5s ease-in-out;
+  visibility: hidden;
+  padding: 0 20px;
 }
 
-footer .footer .nav-list .collapsible > button[aria-expanded="true"] + ul {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
+footer .footer .nav-list .collapsible > button[aria-expanded="true"] + .collapsible-content {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  padding: 22px 20px;
   border-block-end: 1px solid var(--footer-border-color);
 }
 
-footer .footer .nav-list .collapsible > button + ul > li {
-  font-size: 14px;
-  font-weight: 400;
+footer .footer .nav-list .collapsible .collapsible-content .sublist {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
-footer .footer .nav-list .collapsible > button + ul > li a {
+footer .footer .nav-list .collapsible .collapsible-content .sublist > li a {
   display: block;
-}
+} 
 
 footer .footer .section:last-child {
   margin-block: 2rem;
@@ -137,7 +142,7 @@ footer .footer .section:last-child {
     display: none;
   }
 
-  footer .footer .nav-list .collapsible > button[aria-expanded="true"] + ul {
+  footer .footer .nav-list .collapsible > button[aria-expanded="true"] + .collapsible-content {
     border-block-end: none;
   }
 
@@ -145,18 +150,20 @@ footer .footer .section:last-child {
     margin-block-start: 40px;
   }
 
-  footer .footer .section.legal .nav-list .collapsible > button[aria-expanded="true"] + ul {
-    flex-flow: row wrap;
-    gap: 20px;
-    border-block-start: 1px solid var(--footer-border-color);
-    padding-inline: 0;
+  footer .footer .section.legal .nav-list .collapsible .collapsible-content {
+      border-block-start: 1px solid var(--footer-border-color);
   }
 
-  footer .footer .section.legal .nav-list .collapsible > button + ul > li:not(:last-child) {
+  footer .footer .section.legal .nav-list .collapsible .collapsible-content .sublist {
+    flex-flow: row wrap;
+    gap: 20px;
+  }
+
+  footer .footer .section.legal .nav-list .collapsible .collapsible-content .sublist > li:not(:last-child) {
     position: relative;
   }
 
-  footer .footer .section.legal .nav-list .collapsible > button + ul > li:not(:last-child)::after {
+  footer .footer .section.legal .nav-list .collapsible .collapsible-content .sublist li:not(:last-child)::after {
     content: "|";
     position: absolute;
     right: -12px;

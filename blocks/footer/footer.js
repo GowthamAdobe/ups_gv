@@ -36,9 +36,15 @@ function decorateFooterNav(block, footerNavList) {
       });
       dropButton.append(buildSymbol('chevron'));
 
+      const collapsibleContent = document.createElement('div');
+      collapsibleContent.classList.add('collapsible-content');
+      collapsibleContent.append(subList);
+      liEl.append(collapsibleContent);
+
       liEl.prepend(dropButton);
       textNodes.forEach((text) => text.remove());
       subList.setAttribute('id', sublistId);
+      subList.classList = 'sublist';
       dropButton.addEventListener('click', () => {
         if (!isDesktop.matches) {
           const expanded = dropButton.getAttribute('aria-expanded') === 'true';

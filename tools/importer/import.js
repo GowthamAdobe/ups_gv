@@ -1,12 +1,12 @@
 function transform({ document, params }) {
   const potentialBlocks = {};
   [...document.querySelectorAll('.ups-component')].forEach((block) => {
-    const blockName = block.classList[1];
+    block.classList.remove('ups-component');
+    // first remaining class is assumed to be the block name
+    const blockName = block.classList[0];
     if (blockName) {
       const blockVariants = potentialBlocks[blockName] || [];
-      // this assumes the first class is always `ups-component`
-      // and the second class is always the component name
-      [...block.classList].slice(2).forEach((className) => {
+      [...block.classList].slice(1).forEach((className) => {
         if (!blockVariants.includes(className)) {
           blockVariants.push(className);
         }
@@ -15,12 +15,15 @@ function transform({ document, params }) {
     }
   });
 
+  const report = {};
+  report.potentialBlocks = Object.keys(potentialBlocks);
+  Object.entries(potentialBlocks).forEach(([blockName, blockVariants]) => {
+    report[blockName] = blockVariants;
+  });
+
   return [{
     path: new URL(params.originalURL).pathname.replace(/\/$/, '').replace(/\.page$/, '').toLowerCase(),
-    report: {
-      title: document.title,
-      potentialBlocks,
-    },
+    report,
   }];
 }
 

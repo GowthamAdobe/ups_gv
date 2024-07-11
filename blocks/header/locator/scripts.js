@@ -129,7 +129,7 @@ function registerEventListeners(doc) {
   const closeButton = locator.querySelector('button#locator-close');
   closeButton.addEventListener('click', () => {
     locator.setAttribute('aria-hidden', true);
-    document.body.dataset.removeAttribute('data-scroll');
+    document.body.removeAttribute('data-scroll');
   });
 
   // initialize form

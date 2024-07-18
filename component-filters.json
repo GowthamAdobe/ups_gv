@@ -36,6 +36,12 @@
       "card"
     ]
   },
+  {
+    "id": "faqs",
+    "components": [
+      "faq"
+    ]
+  },
   {"id": "section",
     "components": [
       "text",

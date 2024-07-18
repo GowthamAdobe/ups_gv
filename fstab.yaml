@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://localhost:4502/bin/franklin.delivery/AEM-COMP/UPS/main"
+    url: "https://localhost:4502/bin/franklin.delivery/GowthamAdobe/ups_gv/main"
     type: "markup"
     suffix: ".html"
